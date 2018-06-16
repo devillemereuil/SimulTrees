@@ -251,7 +251,7 @@ for (i in 1:12) {
                 gc()
                 
                 
-                ## * ** * ** * ** * ** * ** * Using MICE
+                ## **************** Using MICE
                 #Fitting the models
                 print("Using MICE")
                 
