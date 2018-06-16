@@ -67,7 +67,7 @@ for(h in 1:4){
                 load(paste0("Distributions/trees_t", which_tree,
                             "_nbsw", nbsw, 
                             "_brlnoise", brlnoise, ".Rdata"))
-                distmat <-lapply(distree, function(tree) { cov2cor(vcv.phylo(tree)) })
+                distmat <- lapply(distree, function(tree) { cov2cor(vcv.phylo(tree)) })
                 #Loading the phenotypic data
                 load(paste0("Phenotypes/data_t", which_tree,
                             "_s", sigma,
