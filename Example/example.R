@@ -21,9 +21,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/ > .
 
 ## ----------- Loading the libraries needed
-library(ape)
+library(Rphylopars) # Install from Github to get the newest version
 library(nlme)
 library(mice)
+
+
+## ********************************************************************************************
+##                                      Preliminary steps
+## ********************************************************************************************
 
 ## ----------- Loading the example dataset
 
@@ -43,6 +48,10 @@ head(data)
 # Computing the VCV phylogenetic matrices
 distmat <- lapply(distree, function(tree) { cov2cor(vcv.phylo(tree)) })
 # Note that we use correlation matrices to obtain a variance relating to the variance of the data
+
+## ********************************************************************************************
+##                  Accounting only for phylogenetic uncertainty
+## ********************************************************************************************
 
 ## ----------- Performing the analysis
 
@@ -73,3 +82,29 @@ pool
 # We can compute the efficiency of the multiple imputation as
 eff <- 1 / (1 + (max(pool[ , "fmi"]) / length(distree)))
 # Should be pretty close to 1
+
+## ********************************************************************************************
+##                          Accounting for missing data as well
+## ********************************************************************************************
+    
+# Simulate missing data
+p <- 0.1
+N <- nrow(data)
+Nmiss <- round(p * N)
+data[["phen"]][sample(1:N, Nmiss)] <- NA
+
+# Use functions to convert data
+source("function_transform_data.R")
+
+# Looping over the trees
+mods <- list()
+for (l in 1:length(distree)) {
+    ##TODO Finish this and find a way to make Rphylopars comply!
+    dat  <- convert_data2(trait_data = data,
+                          tree = distree[[l]])
+    pvcv <- revert_data2(phylopars_object = 
+                             phylopars(trait_data = dat[["trait_data"]],
+                                       tree = dat[["tree"]]),
+                         original_trait_data = data,
+                         original_tree = distree[[l]])
+}
