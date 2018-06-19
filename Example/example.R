@@ -71,7 +71,7 @@ for (m in 1:length(distree)) {
 # Combining estimates following Rubin's rule
 models <- as.mira(mods)
 # as.mira takes the list of models and create an object to be used by the mice package
-pool   <- summary(pool(models, method = "smallsample"))
+pool   <- summary.mipo(pool(models, method = "smallsample"))
 # pool summarise the models using Rubin's rule corrected for small samples
 
 # We now can look at the estimates
