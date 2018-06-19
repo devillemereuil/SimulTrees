@@ -21,9 +21,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/ > .
 
 ## ----------- Loading the libraries needed
-library(Rphylopars) # Install from Github to get the newest version
+library(ape)
 library(nlme)
 library(mice)
+library(Rphylopars)
+
+# Using older version of pool when mice 3.0 is used
+source("old.pool.mice.R")
 
 
 ## ********************************************************************************************
