@@ -1,4 +1,4 @@
-require(magrittr)
+require(dplyr)
 
 # Tidier and glance for gls() models
 tidy.gls <- function(x, 
