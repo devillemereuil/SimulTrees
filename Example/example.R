@@ -27,7 +27,8 @@ library(mice)
 library(Rphylopars)
 
 # Using older version of pool when mice 3.0 is used
-source("old.pool.mice.R")
+# source("old.pool.mice.R")
+source("broom_gls.R")
 
 
 ## ********************************************************************************************
@@ -71,16 +72,16 @@ for (m in 1:length(distree)) {
 # Combining estimates following Rubin's rule
 models <- as.mira(mods)
 # as.mira takes the list of models and create an object to be used by the mice package
-pool   <- summary.mipo(pool(models, method = "smallsample"))
+pool   <- summary(pool(models), type = "all", conf.int = TRUE)
 # pool summarise the models using Rubin's rule corrected for small samples
 
 # We now can look at the estimates
 pool
 # For each parameter, we have the estimate values (est) and their standard errors (se),
-# we also have a significance test (t, df and  Pr(>|t|)) and 95% CI (lo 95, hi 95)
+# we also have a significance test (statistic, df and  p.value) and 95% CI (2.5 %, 97.5%)
 # based on the degrees of freedom computed using Rubin's rule.
-# We then have information about the multiple imputation such as number of missing values (nmis),
-# fraction of missing information (fmi) and lambda
+# We then have information about the multiple imputation such as
+# the fraction of missing information (fmi) and lambda
 # (for more information, see the article this example file is linked to)
 
 # We can compute the efficiency of the multiple imputation as
